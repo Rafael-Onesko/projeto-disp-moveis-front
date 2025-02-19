@@ -1,11 +1,11 @@
 <form [formGroup]="usuarioForm" #formDir="ngForm" style="margin: 15px;">
-  <!-- Input Login -->
+  <!-- Input Email -->
   <div>
     <mat-form-field appearance="outline" fxFlex="100">
-      <mat-label>Login</mat-label>
-      <input matInput type="text" formControlName="login" maxlength="20" required trim />
-      <mat-error *ngIf="this.usuarioForm.get('login')?.invalid">
-        {{ retornaErro(this.usuarioForm.get('login')) }}
+      <mat-label>Email</mat-label>
+      <input matInput type="text" formControlName="email" maxlength="20" required trim />
+      <mat-error *ngIf="this.usuarioForm.get('email')?.invalid">
+        {{ retornaErro(this.usuarioForm.get('email')) }}
       </mat-error>
     </mat-form-field>
   </div>
@@ -23,16 +23,16 @@
       <mat-label>Senha</mat-label>
       <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="senha" maxlength="20" required
         trim />
-      <mat-icon *ngIf="usuarioAdmin == 'true' || usuarioLogin === this.usuarioForm.get('login')?.value"
+      <mat-icon *ngIf="usuarioAdmin == 'true' || usuarioEmail === this.usuarioForm.get('email')?.value"
         (click)="showPassword = !showPassword" [class.hide]="showPassword" matSuffix>visibility</mat-icon>
-      <mat-icon *ngIf="usuarioAdmin == 'true' || usuarioLogin === this.usuarioForm.get('login')?.value"
+      <mat-icon *ngIf="usuarioAdmin == 'true' || usuarioEmail === this.usuarioForm.get('email')?.value"
         (click)="showPassword = !showPassword" [class.hide]="!showPassword" matSuffix>visibility_off</mat-icon>
       <mat-error *ngIf="this.usuarioForm.get('senha')?.invalid">{{ retornaErro(this.usuarioForm.get('senha')) }} </mat-error>
     </mat-form-field>
   </div>
   <mat-checkbox formControlName="administrador">Administrador</mat-checkbox>
   <div fxLayout="row" fxLayoutAlign="space-around center">
-    <button *ngIf="usuarioAdmin == 'true' || usuarioLogin === this.usuarioForm.get('login')?.value" mat-raised-button
+    <button *ngIf="usuarioAdmin == 'true' || usuarioEmail === this.usuarioForm.get('email')?.value" mat-raised-button
     style="background-color: green; color: white;" (click)="onClickSalvar()">
       {{ modoEditar ? "Salvar" : "Cadastrar" }}
     </button>

@@ -26,9 +26,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.formLogin = this.formBuilder.group({
-      login: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(20),])],
+      login: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(20)])],
       loginCadastro: ['', Validators.compose([Validators.required, Validators.minLength(6),]), usuarioExists(this.usuarioService)],
-      nome: ['', Validators.compose([Validators.required, Validators.minLength(6),]),],
+      primeiroNome: ['', Validators.compose([Validators.required, Validators.minLength(6),]),],
+      ultimoNome: ['', Validators.compose([Validators.required, Validators.minLength(6),]),],
       senha: ['', Validators.compose([Validators.required, Validators.minLength(6),]),],
       confirmaSenha: ['', Validators.compose([Validators.required, comparadorSenhas()]),],
     });
@@ -37,11 +38,11 @@ export class LoginComponent implements OnInit {
     this.formLogin.get('senha')?.valueChanges.subscribe(() => this.formLogin.get('confirmaSenha')?.updateValueAndValidity());
   }
   onClickLogin() {
-    this.authService.getLogin(this.authData = {login: this.formLogin.get('login')?.value, senha: this.formLogin.get('senha')?.value,}).subscribe({
+    this.authService.getLogin(this.authData = {email: this.formLogin.get('login')?.value, senha: this.formLogin.get('senha')?.value,}).subscribe({
       next: (x) => {
         if (x == true) {
           this.usuarioService.getOneUsuario(this.formLogin.value.login).subscribe((a) => {
-            this.authService.checkAuth(x, a.administrador, a.login, a.nome);
+            this.authService.checkAuth(x, a.admin, a.email, a.ultimoNome);
             this.toastr.success('Login Efetuado com sucesso!');
             this.router.navigate(['/dashboard']);
           });
@@ -64,10 +65,11 @@ export class LoginComponent implements OnInit {
 
   async onClickCadastro() {
     this.loginData = {
-      login: this.formLogin.get('loginCadastro')?.value,
-      nome: this.formLogin.get('nome')?.value,
+      email: this.formLogin.get('loginCadastro')?.value,
+      primeiroNome: this.formLogin.get('primeiroNome')?.value,
+      ultimoNome: this.formLogin.get('ultimoNome')?.value,
       senha: this.formLogin.get('senha')?.value,
-      administrador: false,
+      admin: false,
     };
     this.usuarioService.addUsuario(this.loginData).subscribe((x) => {
       if (x == true) { this.toastr.success('Usuário Cadastrado com Sucesso!'); }

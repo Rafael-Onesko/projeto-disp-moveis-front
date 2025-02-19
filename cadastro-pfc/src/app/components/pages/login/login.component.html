@@ -31,9 +31,20 @@
 
         <mat-form-field>
           <mat-label>Nome</mat-label>
-          <input matInput type="text" formControlName="nome" maxlength="50" required trim="blur" />
-          <mat-error *ngIf="this.formLogin.get('nome')?.invalid">
-            {{ retornaErro(this.formLogin.get('nome'))}}
+          <input matInput type="text" formControlName="primeiroNome" maxlength="50" required trim="blur" />
+          <mat-error *ngIf="this.formLogin.get('primeiroNome')?.invalid">
+            {{ retornaErro(this.formLogin.get('primeiroNome'))}}
+          </mat-error>
+        </mat-form-field>
+      </ng-container>
+      <!-- input Nome -->
+      <ng-container *ngIf="modoCadastro">
+
+        <mat-form-field>
+          <mat-label>Sobrenome</mat-label>
+          <input matInput type="text" formControlName="ultimoNome" maxlength="50" required trim="blur" />
+          <mat-error *ngIf="this.formLogin.get('ultimoNome')?.invalid">
+            {{ retornaErro(this.formLogin.get('ultimoNome'))}}
           </mat-error>
         </mat-form-field>
       </ng-container>

@@ -18,18 +18,18 @@ export class CadastroUsuarioComponent implements OnInit {
   modoEditar = true;
   selfEdit = false;
   usuarioAdmin = localStorage.getItem('usuarioAdmin');
-  usuarioLogin = localStorage.getItem('usuarioLogin');
+  usuarioEmail = localStorage.getItem('usuarioEmail');
   retornaErro = retornaErro;
 
   constructor(private route: ActivatedRoute, private router: Router, private usuarioService: UsuarioService,
     private toastr: ToastrService, private formBuilder: FormBuilder
   ) {
     this.usuarioForm = this.formBuilder.group({
-      login: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(20),]),
+      email: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(20),]),
         usuarioExists(this.usuarioService),],
       nome: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(50),])],
       senha: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(20),]),],
-      administrador: [false],
+      admin: [false],
     });
   }
 
@@ -51,13 +51,13 @@ export class CadastroUsuarioComponent implements OnInit {
     this.usuarioService.getOneUsuario(id).subscribe({
       next: (x) => {
         this.usuarioForm.patchValue(x);
-        this.usuarioForm.get('login')?.disable();
+        this.usuarioForm.get('email')?.disable();
         this.modoEditar = true;
-        if (x.login == this.usuarioLogin) {
+        if (x.email == this.usuarioEmail) {
           this.selfEdit = true;
           this.usuarioForm.get('nome')?.enable();
           this.usuarioForm.get('senha')?.enable();
-          this.usuarioForm.get('administrador')?.disable();
+          this.usuarioForm.get('admin')?.disable();
         } else {
           if (this.usuarioAdmin !== 'true') { this.usuarioForm.disable(); }
         }
@@ -72,9 +72,9 @@ export class CadastroUsuarioComponent implements OnInit {
   async onClickSalvar() {
     if (this.usuarioForm.invalid) {
       this.toastr.error('Algum dado está inválido, favor revisar o formulário');
-      this.usuarioForm.get('login')?.updateValueAndValidity();
+      this.usuarioForm.get('email')?.updateValueAndValidity();
     } else if (this.modoEditar == true) {
-      this.usuarioService.editUsuario(this.usuarioForm.getRawValue(), this.usuarioForm.get('login')?.value).subscribe({
+      this.usuarioService.editUsuario(this.usuarioForm.getRawValue(), this.usuarioForm.get('email')?.value).subscribe({
         next: (x) => {
           if (x == true) {
             if (this.selfEdit == true) {

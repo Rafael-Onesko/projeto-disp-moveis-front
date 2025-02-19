@@ -13,7 +13,7 @@ import { DeletaUsuarioComponent } from '../../dialogs/deleta-usuario/deleta-usua
   styleUrls: ['./lista-usuarios.component.scss'],
 })
 export class ListaUsuariosComponent implements AfterViewInit {
-  displayedColumns: string[] = ['login', 'nome', 'open', 'delete'];
+  displayedColumns: string[] = ['email', 'nome', 'open', 'delete'];
   dadosUsuarios = new MatTableDataSource<Usuario>();
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
@@ -24,7 +24,7 @@ export class ListaUsuariosComponent implements AfterViewInit {
     public dialog: MatDialog
   ) {
     if (this.usuarioAdmin == 'false') {
-      this.displayedColumns = ['login', 'nome', 'open'];
+      this.displayedColumns = ['email', 'nome', 'open'];
     }
   }
   ngAfterViewInit() {
@@ -50,7 +50,7 @@ export class ListaUsuariosComponent implements AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.dadosUsuarios.data = this.dadosUsuarios.data.filter((u) => toDelete !== u.login)
+        this.dadosUsuarios.data = this.dadosUsuarios.data.filter((u) => toDelete !== u.email)
       }
     })
   }

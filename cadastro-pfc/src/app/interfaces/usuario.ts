@@ -1,11 +1,12 @@
 export interface Usuario {
-    login: string;
-    nome: string;
+    email: string;
+    primeiroNome: string;
+    ultimoNome: string;
     senha: string;
-    administrador: boolean;
+    admin: boolean;
 }
 
 export interface AuthData {
-    login: string;
+    email: string;
     senha: string;
 }
