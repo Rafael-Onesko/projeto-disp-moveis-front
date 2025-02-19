@@ -1,0 +1,33 @@
+mat-card {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    border-radius: 5px;
+    min-width: 500px;
+    min-height: 250px;
+    background-color: lightgray;
+
+}
+
+button {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+mat-card-content {
+
+    display: grid;
+
+}
+
+mat-form-field {
+    display: flex;
+    justify-content: space-between;
+}
+
+.hide {
+    display: none;
+}

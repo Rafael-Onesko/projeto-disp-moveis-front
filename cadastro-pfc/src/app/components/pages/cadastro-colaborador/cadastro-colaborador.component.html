@@ -1,0 +1,287 @@
+<form [formGroup]="formColaborador" #formDir="ngForm" style="margin: 15px;">
+  <!-- ROW 1 -->
+  <!-- Input Matricula -->
+  <div fxLayout.gt-md="row" fxLayout.lt-md="column">
+    <mat-form-field class="matricula" appearance="outline" fxFlex.gt-md="20" fxFlex.md="20" fxFlex.lt-md="100">
+      <mat-label>Matricula</mat-label>
+      <input matInput type="number" formControlName="matricula" required trim />
+      <mat-error *ngIf="this.formColaborador.get('matricula')?.invalid">
+        {{ retornaErro(this.formColaborador.get("matricula")) }}
+      </mat-error>
+    </mat-form-field>
+    <ng-container formGroupName="pessoaFisica">
+      <mat-form-field class="nome" appearance="outline" fxFlex.gt-md="50" fxFlex.md="50" fxFlex.lt-md="100"
+        class="campo">
+        <mat-label>Nome</mat-label>
+        <input matInput type="text" formControlName="nome" maxlength="50" required trim="blur" />
+        <mat-error *ngIf="this.formColaborador.get('pessoaFisica.nome')?.invalid">
+          {{retornaErro(this.formColaborador.get("pessoaFisica.nome"))}}
+        </mat-error>
+      </mat-form-field>
+      <!-- input Cpf -->
+      <mat-form-field class="cpf" appearance="outline" fxFlex.gt-md="30" fxFlex.md="30" fxFlex.lt-md="100"
+        class="campo">
+        <mat-label>CPF</mat-label>
+        <input matInput type="text" formControlName="cpf" mask="000.000.000-00" required trim />
+        <mat-error *ngIf="this.formColaborador.get('pessoaFisica.cpf')?.invalid">
+          {{ retornaErro(this.formColaborador.get("pessoaFisica.cpf")) }}
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+    <!--  -->
+  </div>
+  <!-- ROW 2 -->
+  <div fxLayout.gt-md="row" fxLayout.lt-md="column">
+    <ng-container formGroupName="pessoaFisica">
+      <!-- Input DataNasc -->
+      <mat-form-field type="date" class="DataNasc" appearance="outline" fxFlex.gt-md="30" fxFlex.md="30"
+        fxFlex.lt-md="100">
+        <mat-label>Data de Nascimento</mat-label>
+        <input matInput class="invisible" [matDatepicker]="pickerNascimento" formControlName="dataNascimento"
+          (dateInput)="formatData(this.formColaborador.get('pessoaFisica.dataNascimento')?.value, 1)"
+          (dateChange)="checkData()">
+        <input matInput mask="00/00/0000" [dropSpecialCharacters]="false" [showMaskTyped]="true"
+          [ngModelOptions]="{standalone: true}" [(ngModel)]="valorDataNascimento" (blur)="fillData(1); checkData()" />
+        <mat-datepicker-toggle matIconSuffix [for]="pickerNascimento"></mat-datepicker-toggle>
+        <mat-datepicker #pickerNascimento></mat-datepicker>
+        <mat-error *ngIf="this.formColaborador.get('pessoaFisica.dataNascimento')?.invalid">
+          {{ retornaErro(this.formColaborador.get("pessoaFisica.dataNascimento")) }}
+        </mat-error>
+      </mat-form-field>
+      <!-- Input RG -->
+      <mat-form-field class="pessoaFisica.rg" appearance="outline" fxFlex.gt-md="40" fxFlex.md="40" fxFlex.lt-md="100"
+        class="campo">
+        <mat-label>RG</mat-label>
+        <input matInput type="text" formControlName="rg" maxlength="10" required trim />
+        <mat-error *ngIf="this.formColaborador.get('pessoaFisica.rg')?.invalid">
+          {{retornaErro(this.formColaborador.get("pessoaFisica.rg")) }}
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+
+    <!-- Input ValCont -->
+    <mat-form-field class="valCont" appearance="outline" fxFlex.gt-md="30" fxFlex.md="30" fxFlex.lt-md="100"
+      class="campo">
+      <mat-label>Valor de Contribuição</mat-label>
+      <input matInput currencyMask type="text" [options]="{
+          prefix: 'R$ ',
+          thousands: '.',
+          decimal: ',',
+          align: 'left'
+        }" formControlName="valorContribuicao" trim />
+      <mat-error *ngIf="this.formColaborador.get('valorContribuicao')?.invalid">
+        {{ retornaErro(this.formColaborador.get("valorContribuicao")) }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- ROW 3 -->
+  <div fxLayout.gt-md="row" fxLayout.lt-md="column">
+    <!-- Input TipoColab -->
+    <mat-form-field class="tipoColab" appearance="outline" fxFlex.gt-md="50" fxFlex.md="50" fxFlex.lt-md="100">
+      <mat-label>Tipo de Colaborador</mat-label>
+      <mat-select formControlName="tipoColaborador" required>
+        <mat-option *ngFor="let tipo of tiposCB" [value]="tipo.value">
+          {{ tipo.tipo }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="this.formColaborador.get('tipoColaborador')?.invalid">
+        {{ retornaErro(this.formColaborador.get("tipoColaborador")) }}
+      </mat-error>
+    </mat-form-field>
+    <!-- Input DataAdmiss -->
+    <mat-form-field class="DataAdmiss" appearance="outline" fxFlex.gt-md="50" fxFlex.md="50" fxFlex.lt-md="100"
+      class="campo">
+      <mat-label>Data de Admissão</mat-label>
+      <input matInput class="invisible" [matDatepicker]="pickerAdmissao" formControlName="dataAdmissao"
+        (dateChange)="formatData(this.formColaborador.get('dataAdmissao')?.value, 2)">
+      <input matInput mask="00/00/0000" [dropSpecialCharacters]="false" [showMaskTyped]="true"
+        [ngModelOptions]="{standalone: true}" [(ngModel)]="valorDataAdmissao" (blur)="fillData(2); checkData()"
+        required />
+      <mat-datepicker-toggle matIconSuffix [for]="pickerAdmissao"></mat-datepicker-toggle>
+      <mat-datepicker #pickerAdmissao></mat-datepicker>
+      <mat-error *ngIf="this.formColaborador.get('dataAdmissao')?.invalid">
+        {{ retornaErro(this.formColaborador.get("dataAdmissao"))}}
+      </mat-error>
+    </mat-form-field>
+    <!--  -->
+  </div>
+  <!-- TABLE ENDEREÇOS -->
+  <div style="margin-top: 30px;">
+
+    <div class="tableHeader">
+      <h1>ENDEREÇOS</h1>
+      <button mat-raised-button (click)="addEndereco()" color="primary">
+        Adicionar Endereço
+      </button>
+    </div>
+    <div class="table-container mat-elevation-z8">
+      <table mat-table [dataSource]="enderecoSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="cep" formArrayName="enderecos">
+          <th mat-header-cell *matHeaderCellDef>CEP</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+              <input (change)="viaCEP(element)" matInput type="text" formControlName="cep" mask="00000-000"
+                minlength="8" maxlength="9" trim />
+              <mat-error *ngIf="element">
+                {{ retornaErro(element.get("cep")) }}
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="logradouro" formArrayName="enderecos">
+          <th mat-header-cell *matHeaderCellDef>Logradouro</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+              <input matInput type="text" formControlName="logradouro" maxlength="100" trim />
+              <mat-error *ngIf="element">
+                {{ retornaErro(element.get("logradouro")) }}
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="numero" formArrayName="enderecos">
+          <th mat-header-cell *matHeaderCellDef>Número/Complemento</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+              <input matInput type="text" formControlName="numeroEndereco" maxlength="10" trim />
+              <mat-error *ngIf="element">
+                {{ retornaErro(element.get("numeroEndereco")) }}
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="bairro" formArrayName="enderecos">
+          <th mat-header-cell *matHeaderCellDef>Bairro</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+              <input matInput type="text" formControlName="bairro" maxlength="50" trim />
+              <mat-error *ngIf="element">
+                {{ retornaErro(element.get("bairro")) }}
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cidade" formArrayName="enderecos">
+          <th mat-header-cell *matHeaderCellDef>Cidade</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+              <input matInput type="text" formControlName="cidade" maxlength="100" trim />
+              <mat-error *ngIf="element">
+                {{ retornaErro(element.get("cidade")) }}
+              </mat-error>
+            </mat-form-field>
+          </td>
+          element
+        </ng-container>
+
+        <ng-container matColumnDef="tipo" formArrayName="enderecos">
+          <th mat-header-cell *matHeaderCellDef>Tipo</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="tipoEndereco">
+                <mat-option *ngFor="let tipo of tiposED" [value]="tipo.value">
+                  {{ tipo.tipo }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="element">
+                {{ retornaErro(element.get("tipoEndereco")) }}
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="excluir" formArrayName="enderecos">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <button mat-raised-button color="warn"
+              (click)="removeEndereco(enderecos.controls.indexOf(element))">
+              Excluir
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="enderecoColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: enderecoColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">Nenhum endereço cadastrado</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+  <!--  -->
+  <!-- TABLE TELEFONE -->
+  <div style="margin-top: 50px; margin-bottom: 20px;">
+    <div class="tableHeader">
+      <h1>TELEFONES</h1>
+      <button mat-raised-button (click)="addTelefone()" color="primary">
+        Adicionar Telefone
+      </button>
+    </div>
+    <div class="table-container mat-elevation-z8">
+      <table mat-table [dataSource]="telefoneSource">
+        <ng-container matColumnDef="numero" formArrayName="telefones">
+          <th mat-header-cell *matHeaderCellDef>Número</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+              <input (input)="checkNumeroTelefone()" matInput type="text" formControlName="numeroTelefone"
+                mask="(00)00000-0000" trim />
+              <mat-error *ngIf="element">
+                {{ retornaErro(element.get("numeroTelefone")) }}
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="tipo" formArrayName="telefones">
+          <th mat-header-cell *matHeaderCellDef>Tipo</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="tipoTelefone">
+                <mat-option *ngFor="let tipo of tiposTL" [value]="tipo.value">
+                  {{ tipo.tipo }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="element">
+                {{ retornaErro(element.get("tipoTelefone")) }}
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="excluir" formArrayName="telefones">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <button mat-raised-button color="warn"
+              (click)="removeTelefone(telefones.controls.indexOf(element))">
+              Excluir
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="telefoneColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: telefoneColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">
+            Nenhum número de telefone cadastrado
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--  -->
+  <div fxLayout.gt-md="row" fxLayout.lt-md="column">
+    <button mat-raised-button style="background-color: green; color: white; margin-right: 15px;" (click)="onClickSalvar()">
+      {{ modoEditar ? "Salvar" : "Cadastrar" }}
+    </button>
+    <br />
+    <br />
+    <a routerLink="/listacolaboradores">
+      <button mat-raised-button color="primary">
+        Voltar
+      </button>
+    </a>
+  </div>
+</form>

@@ -1,0 +1,27 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <p mat-list-item class="hello">Olá {{usuarioLogin}}!<br>({{usuarioNome}})</p>
+
+      <a mat-list-item routerLink="/dashboard" (click)="drawer.toggle()"><mat-icon matSuffix>assignment_ind</mat-icon>
+        Seu Perfil</a>
+      <a mat-list-item routerLink="/listacolaboradores" (click)="drawer.toggle()"><mat-icon
+          matSuffix>business_center</mat-icon> Colaboradores</a>
+      <a mat-list-item routerLink="/listausuarios" (click)="drawer.toggle()"><mat-icon matSuffix>group</mat-icon>
+        Usuários</a>
+      <a mat-list-item class="logout" (click)="onClickLogout()"><mat-icon matSuffix>undo</mat-icon> Logout</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>{{title}}</span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

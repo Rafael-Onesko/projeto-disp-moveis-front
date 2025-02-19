@@ -1,0 +1,97 @@
+<mat-card style="background-color: lightblue; text-align: center">
+  <mat-card-title>LOGIN</mat-card-title>
+  <mat-card-content>
+    <!-- Form -->
+    <form [formGroup]="formLogin" #formDir="ngForm">
+      <!-- Input Login -->
+      <ng-container *ngIf="!modoCadastro">
+
+        <mat-form-field>
+          <mat-label>Login</mat-label>
+          <input matInput type="text" formControlName="login" maxlength="20" required trim />
+          <mat-error *ngIf="this.formLogin.get('login')?.invalid">
+            {{ retornaErro(this.formLogin.get('login')) }}
+          </mat-error>
+        </mat-form-field>
+      </ng-container>
+      <!-- Input Login Cadastro -->
+
+      <ng-container *ngIf="modoCadastro">
+
+        <mat-form-field>
+          <mat-label>Login</mat-label>
+          <input matInput type="text" formControlName="loginCadastro" maxlength="20" required trim />
+          <mat-error *ngIf="this.formLogin.get('loginCadastro')?.invalid">
+            {{ retornaErro(this.formLogin.get('loginCadastro')) }}
+          </mat-error>
+        </mat-form-field>
+      </ng-container>
+      <!-- input Nome -->
+      <ng-container *ngIf="modoCadastro">
+
+        <mat-form-field>
+          <mat-label>Nome</mat-label>
+          <input matInput type="text" formControlName="nome" maxlength="50" required trim="blur" />
+          <mat-error *ngIf="this.formLogin.get('nome')?.invalid">
+            {{ retornaErro(this.formLogin.get('nome'))}}
+          </mat-error>
+        </mat-form-field>
+      </ng-container>
+      <!-- input Senha -->
+      <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input matInput (change)="checaSenhas()" [type]="showPassword ? 'text' : 'password'" formControlName="senha"
+          maxlength="20" required trim />
+        <mat-icon (click)="showPassword = !showPassword" [class.hide]="showPassword" matSuffix>visibility</mat-icon>
+        <mat-icon (click)="showPassword = !showPassword" [class.hide]="!showPassword"
+          matSuffix>visibility_off</mat-icon>
+        <mat-error *ngIf="this.formLogin.get('senha')?.invalid">{{ retornaErro(this.formLogin.get('senha')) }}
+        </mat-error>
+      </mat-form-field>
+      <!-- input Confirma Senha -->
+      <ng-container *ngIf="modoCadastro">
+        <mat-form-field>
+          <mat-label>Confirme a Senha</mat-label>
+          <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="confirmaSenha" maxlength="20"
+            required trim />
+          <mat-icon (click)="showPassword = !showPassword" [class.hide]="showPassword" matSuffix>visibility</mat-icon>
+          <mat-icon (click)="showPassword = !showPassword" [class.hide]="!showPassword"
+            matSuffix>visibility_off</mat-icon>
+
+          <mat-error *ngIf="this.formLogin.get('confirmaSenha')?.invalid">
+            {{ retornaErro(this.formLogin.get('confirmaSenha')) }}
+          </mat-error>
+        </mat-form-field>
+      </ng-container>
+      <br />
+      <br />
+      <!-- Botão Login -->
+      <button *ngIf="!modoCadastro"
+        [disabled]="!this.formLogin.get('senha')?.valid || !this.formLogin.get('login')?.valid"
+        type="submit" mat-raised-button  color="primary"  (click)="onClickLogin()">
+        Entrar
+      </button>
+      <br />
+      <br />
+      <!-- Botão Modo Cadastro -->
+      <button *ngIf="!modoCadastro" mat-raised-button  color="primary" 
+        (click)="modoCadastro = !modoCadastro" (click)="this.formLogin.reset()">
+        Cadastrar Novo Usuário
+      </button>
+      <!-- Botão Cadastro -->
+      <button *ngIf="modoCadastro"
+        [disabled]="this.formLogin.get('loginCadastro')?.invalid || this.formLogin.get('nome')?.invalid || this.formLogin.get('senha')?.invalid || this.formLogin.get('confirmaSenha')?.invalid"
+        type="submit" mat-raised-button  color="primary"  (click)="onClickCadastro()"
+        (click)="modoCadastro = !modoCadastro" (click)="this.formLogin.reset()">
+        Cadastrar
+      </button>
+      <!-- Botão !Modo Cadastro -->
+      <br />
+      <br />
+      <button *ngIf="modoCadastro" mat-raised-button  color="primary" 
+        (click)="modoCadastro = !modoCadastro" (click)="this.formLogin.reset()">
+        Voltar
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

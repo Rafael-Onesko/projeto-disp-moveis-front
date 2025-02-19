@@ -1,0 +1,43 @@
+<form [formGroup]="usuarioForm" #formDir="ngForm" style="margin: 15px;">
+  <!-- Input Login -->
+  <div>
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>Login</mat-label>
+      <input matInput type="text" formControlName="login" maxlength="20" required trim />
+      <mat-error *ngIf="this.usuarioForm.get('login')?.invalid">
+        {{ retornaErro(this.usuarioForm.get('login')) }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <!-- input Nome -->
+  <div>
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>Nome</mat-label>
+      <input matInput type="text" formControlName="nome" maxlength="50" required trim="blur" />
+      <mat-error *ngIf="this.usuarioForm.get('nome')?.invalid">{{ retornaErro(this.usuarioForm.get('nome')) }}</mat-error>
+    </mat-form-field>
+  </div>
+  <!-- input Senha -->
+  <div>
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>Senha</mat-label>
+      <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="senha" maxlength="20" required
+        trim />
+      <mat-icon *ngIf="usuarioAdmin == 'true' || usuarioLogin === this.usuarioForm.get('login')?.value"
+        (click)="showPassword = !showPassword" [class.hide]="showPassword" matSuffix>visibility</mat-icon>
+      <mat-icon *ngIf="usuarioAdmin == 'true' || usuarioLogin === this.usuarioForm.get('login')?.value"
+        (click)="showPassword = !showPassword" [class.hide]="!showPassword" matSuffix>visibility_off</mat-icon>
+      <mat-error *ngIf="this.usuarioForm.get('senha')?.invalid">{{ retornaErro(this.usuarioForm.get('senha')) }} </mat-error>
+    </mat-form-field>
+  </div>
+  <mat-checkbox formControlName="administrador">Administrador</mat-checkbox>
+  <div fxLayout="row" fxLayoutAlign="space-around center">
+    <button *ngIf="usuarioAdmin == 'true' || usuarioLogin === this.usuarioForm.get('login')?.value" mat-raised-button
+    style="background-color: green; color: white;" (click)="onClickSalvar()">
+      {{ modoEditar ? "Salvar" : "Cadastrar" }}
+    </button>
+    <a routerLink="/listausuarios">
+      <button mat-raised-button color="primary">Voltar</button>
+    </a>
+  </div>
+</form>

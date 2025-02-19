@@ -1,0 +1,42 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.hello{
+  display: flexbox;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+  font-size: large;
+  text-align: center;
+}
+
+.mat-icon{
+  vertical-align: middle;
+}
+
+a{
+  margin-top: 15px;
+}
+
+.sidenav {
+  width: 200px;
+}
+.logout{
+  margin: 0;
+  position: absolute;
+  top: 95%;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
