@@ -21,9 +21,9 @@ export class UsuarioService {
   addUsuario(usuario: Usuario): Observable<boolean> {
     return this._http.post<boolean>(this.baseApiUrl, usuario);
   }
-
+  
   editUsuario(usuario: Usuario, login: string): Observable<boolean> {
-    const params = new HttpParams().append('id', login)
+    const params = new HttpParams().append('email', login)
     return this._http.post<boolean>(`${this.baseApiUrl}`, usuario, { params });
   }
 

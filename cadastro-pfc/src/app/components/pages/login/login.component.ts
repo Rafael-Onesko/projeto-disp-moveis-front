@@ -70,6 +70,8 @@ export class LoginComponent implements OnInit {
       ultimoNome: this.formLogin.get('ultimoNome')?.value,
       senha: this.formLogin.get('senha')?.value,
       admin: false,
+      rolesUsuario: [],
+      materiasUsuario: []
     };
     this.usuarioService.addUsuario(this.loginData).subscribe((x) => {
       if (x == true) { this.toastr.success('Usuário Cadastrado com Sucesso!'); }

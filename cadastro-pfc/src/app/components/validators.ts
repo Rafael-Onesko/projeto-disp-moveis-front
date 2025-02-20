@@ -78,8 +78,6 @@ export function admissionDateValidPast(): ValidatorFn {
   };
 }
 
-
-
 export function telefoneDuplicado(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const actualForm = control.parent?.parent?.getRawValue();
@@ -91,8 +89,6 @@ export function telefoneDuplicado(): ValidatorFn {
     return null;
   };
 }
-
-
 
 export function cpfValidator(ctrl: AbstractControl) {
   if (!!ctrl && !!ctrl.value && !isValidCPF(ctrl.value)) { return { custom: { message: 'CPF Inválido.' } }; }

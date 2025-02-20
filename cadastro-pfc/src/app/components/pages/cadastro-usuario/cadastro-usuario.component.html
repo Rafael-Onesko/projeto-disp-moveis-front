@@ -13,10 +13,18 @@
   <div>
     <mat-form-field appearance="outline" fxFlex="100">
       <mat-label>Nome</mat-label>
-      <input matInput type="text" formControlName="nome" maxlength="50" required trim="blur" />
-      <mat-error *ngIf="this.usuarioForm.get('nome')?.invalid">{{ retornaErro(this.usuarioForm.get('nome')) }}</mat-error>
+      <input matInput type="text" formControlName="primeiroNome" maxlength="50" required trim="blur" />
+      <mat-error *ngIf="this.usuarioForm.get('primeiroNome')?.invalid">{{ retornaErro(this.usuarioForm.get('primeiroNome')) }}</mat-error>
     </mat-form-field>
   </div>
+    <!-- input Nome -->
+    <div>
+      <mat-form-field appearance="outline" fxFlex="100">
+        <mat-label>Sobrenome</mat-label>
+        <input matInput type="text" formControlName="ultimoNome" maxlength="50" required trim="blur" />
+        <mat-error *ngIf="this.usuarioForm.get('ultimoNome')?.invalid">{{ retornaErro(this.usuarioForm.get('ultimoNome')) }}</mat-error>
+      </mat-form-field>
+    </div>
   <!-- input Senha -->
   <div>
     <mat-form-field appearance="outline" fxFlex="100">
@@ -30,7 +38,53 @@
       <mat-error *ngIf="this.usuarioForm.get('senha')?.invalid">{{ retornaErro(this.usuarioForm.get('senha')) }} </mat-error>
     </mat-form-field>
   </div>
-  <mat-checkbox formControlName="administrador">Administrador</mat-checkbox>
+    <!-- TABLE ROLE -->
+    <div style="margin-top: 50px; margin-bottom: 20px;">
+      <div class="tableHeader">
+        <h1>ROLES</h1>
+        <button mat-raised-button (click)="addRole()" color="primary">
+          Adicionar Role
+        </button>
+      </div>
+      <div class="table-container mat-elevation-z8">
+        <table mat-table [dataSource]="roleSource">
+          <ng-container matColumnDef="roleNome" formArrayName="roles">
+            <th mat-header-cell *matHeaderCellDef>Role</th>
+            <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+              <mat-form-field appearance="outline">
+                <!-- <input matInput type="text" formControlName="numeroRole" trim/> -->
+              <mat-select (valueChange)="updateRole(element)" formControlName="roleNome" required>
+                <mat-option *ngFor="let role of rolesAPI" [value]="role.roleNome">
+                  {{ role.roleNome }}
+                </mat-option>
+              </mat-select>
+                <mat-error *ngIf="element">
+                  {{ retornaErro(element.get("roleNome")) }}
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="excluir" formArrayName="roles">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+              <button mat-raised-button color="warn"
+                (click)="removeRole(roles.controls.indexOf(element))">
+                Excluir
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="roleColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: roleColumns"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">
+              Nenhum role cadastrado
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!--  -->
+  <mat-checkbox *ngIf="usuarioAdmin == 'true'" formControlName="admin">Administrador</mat-checkbox>
   <div fxLayout="row" fxLayoutAlign="space-around center">
     <button *ngIf="usuarioAdmin == 'true' || usuarioEmail === this.usuarioForm.get('email')?.value" mat-raised-button
     style="background-color: green; color: white;" (click)="onClickSalvar()">
@@ -41,3 +95,4 @@
     </a>
   </div>
 </form>
+
