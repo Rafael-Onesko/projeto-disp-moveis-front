@@ -21,3 +21,15 @@ mat-card{
   min-width: 500px;
   min-height: 250px;
 }
+.scrollable-card {
+  width: 400px; /* Define uma largura fixa */
+  height: 300px; /* Define uma altura fixa */
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollable-card .content {
+  flex: 1; /* Permite que o conteúdo ocupe o espaço restante */
+  overflow: auto; /* Adiciona a rolagem */
+  max-height: 200px; /* Altura máxima para ativar o scroll */
+}

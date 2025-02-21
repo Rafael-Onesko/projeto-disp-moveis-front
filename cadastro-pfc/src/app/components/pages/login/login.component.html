@@ -1,4 +1,4 @@
-<mat-card style="background-color: lightblue; text-align: center">
+<mat-card class="scrollable-card" style="display: flex; justify-content: center;width: 250px;background-color: lightblue; text-align: center">
   <mat-card-title>LOGIN</mat-card-title>
   <mat-card-content>
     <!-- Form -->
@@ -6,7 +6,7 @@
       <!-- Input Login -->
       <ng-container *ngIf="!modoCadastro">
 
-        <mat-form-field>
+        <mat-form-field style="display: flex; justify-content: center;width: 250px;">
           <mat-label>Login</mat-label>
           <input matInput type="text" formControlName="login" maxlength="20" required trim />
           <mat-error *ngIf="this.formLogin.get('login')?.invalid">
@@ -18,7 +18,7 @@
 
       <ng-container *ngIf="modoCadastro">
 
-        <mat-form-field>
+        <mat-form-field style="display: flex; justify-content: center;width: 250px;">
           <mat-label>Login</mat-label>
           <input matInput type="text" formControlName="loginCadastro" maxlength="20" required trim />
           <mat-error *ngIf="this.formLogin.get('loginCadastro')?.invalid">
@@ -29,7 +29,7 @@
       <!-- input Nome -->
       <ng-container *ngIf="modoCadastro">
 
-        <mat-form-field>
+        <mat-form-field style="display: flex; justify-content: center;width: 250px;">
           <mat-label>Nome</mat-label>
           <input matInput type="text" formControlName="primeiroNome" maxlength="50" required trim="blur" />
           <mat-error *ngIf="this.formLogin.get('primeiroNome')?.invalid">
@@ -40,7 +40,7 @@
       <!-- input Nome -->
       <ng-container *ngIf="modoCadastro">
 
-        <mat-form-field>
+        <mat-form-field style="display: flex; justify-content: center;width: 250px;">
           <mat-label>Sobrenome</mat-label>
           <input matInput type="text" formControlName="ultimoNome" maxlength="50" required trim="blur" />
           <mat-error *ngIf="this.formLogin.get('ultimoNome')?.invalid">
@@ -49,7 +49,7 @@
         </mat-form-field>
       </ng-container>
       <!-- input Senha -->
-      <mat-form-field>
+      <mat-form-field  style="display: flex; justify-content: center;width: 250px;">
         <mat-label>Senha</mat-label>
         <input matInput (change)="checaSenhas()" [type]="showPassword ? 'text' : 'password'" formControlName="senha"
           maxlength="20" required trim />
@@ -61,7 +61,7 @@
       </mat-form-field>
       <!-- input Confirma Senha -->
       <ng-container *ngIf="modoCadastro">
-        <mat-form-field>
+        <mat-form-field  style="width: 250px; ">
           <mat-label>Confirme a Senha</mat-label>
           <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="confirmaSenha" maxlength="20"
             required trim />

@@ -1,0 +1,51 @@
+<mat-form-field>
+  <mat-label>Busca</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Pesquise um role!" #input />
+</mat-form-field>
+<div class="table-container">
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dadosRoles" matSort>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <!-- LOGIN Column -->
+      <ng-container matColumnDef="roleNome">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+        <td mat-cell *matCellDef="let row">{{ row.roleNome }}</td>
+      </ng-container>
+
+      <!-- NOVO -->
+      <ng-container matColumnDef="open">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row"><a routerLink="/editarrole/{{row.role_ID}}">
+            <button *ngIf="usuarioAdmin === 'true' || usuarioLogin === row.role_ID" class="newbutton" mat-raised-button color="primary">ABRIR</button></a></td>
+      </ng-container>
+      <!-- DELETE -->
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <button *ngIf="usuarioAdmin === 'true' && usuarioLogin !== row.role_ID" class="newbutton" mat-raised-button
+            color="warn" (click)="openDialog(row.role_ID, 'role')">EXCLUIR</button>
+        </td>
+      </ng-container>
+      <!--  -->
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Nenhum role encontrado</td>
+      </tr>
+    </table>
+
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <a routerLink="/novorole">
+          <button *ngIf="usuarioAdmin == 'true'" mat-raised-button style="background-color: green; color: white;">
+            Novo
+          </button>
+        </a>
+        <mat-paginator style="background-color: #f5f5f5" [hidePageSize]="true" pageSize="10"
+          showFirstLastButtons="True"></mat-paginator>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </div>
+</div>

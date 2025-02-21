@@ -1,0 +1,23 @@
+<form [formGroup]="roleForm" #formDir="ngForm" style="margin: 15px;">
+
+  <!-- Input role -->
+  <div>
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>roleNome</mat-label>
+      <input matInput type="text" formControlName="roleNome" maxlength="20" required trim />
+      <mat-error *ngIf="this.roleForm.get('roleNome')?.invalid">
+        {{ retornaErro(this.roleForm.get('roleNome')) }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+  
+  <div fxLayout="row" fxLayoutAlign="space-around center">
+    <button *ngIf="usuarioAdmin == 'true' || usuarioprofessor_ID === this.roleForm.get('professor_ID')?.value"
+      mat-raised-button style="background-color: green; color: white;" (click)="onClickSalvar()">
+      {{ modoEditar ? "Salvar" : "Cadastrar" }}
+    </button>
+    <a routerLink="/listaroles">
+      <button mat-raised-button color="primary">Voltar</button>
+    </a>
+  </div>
+</form>

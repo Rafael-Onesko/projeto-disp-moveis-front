@@ -48,11 +48,10 @@
       </div>
       <div class="table-container mat-elevation-z8">
         <table mat-table [dataSource]="roleSource">
-          <ng-container matColumnDef="roleNome" formArrayName="roles">
+          <ng-container matColumnDef="roleNome" formArrayName="rolesUsuario">
             <th mat-header-cell *matHeaderCellDef>Role</th>
             <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
               <mat-form-field appearance="outline">
-                <!-- <input matInput type="text" formControlName="numeroRole" trim/> -->
               <mat-select (valueChange)="updateRole(element)" formControlName="roleNome" required>
                 <mat-option *ngFor="let role of rolesAPI" [value]="role.roleNome">
                   {{ role.roleNome }}
@@ -64,7 +63,7 @@
               </mat-form-field>
             </td>
           </ng-container>
-          <ng-container matColumnDef="excluir" formArrayName="roles">
+          <ng-container matColumnDef="excluir" formArrayName="rolesUsuario">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
               <button mat-raised-button color="warn"
@@ -84,6 +83,107 @@
       </div>
     </div>
     <!--  -->
+      <!-- TABLE MATERIAS -->
+  <div style="margin-top: 30px;">
+
+    <div class="tableHeader">
+      <h1>MATÉRIAS</h1>
+      <button mat-raised-button (click)="addMateria()" color="primary">
+        Adicionar Matéria
+      </button>
+    </div>
+    <div class="table-container mat-elevation-z8">
+      <table mat-table [dataSource]="materiaSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="materia_ID" materiaformArrayName="materiasUsuario">
+          <th mat-header-cell *matHeaderCellDef>Código Matéria</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+                <mat-select (selectionChange)="updateMateriaCod(element)" formControlName="materia_ID" required>
+                  <mat-option *ngFor="let materia of materiasAPI" [value]="materia.materia_ID">
+                    {{ materia.materia_ID }}
+                  </mat-option>
+                </mat-select>
+              <mat-error *ngIf="element">
+                {{ retornaErro(element.get("materia_ID")) }}
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="materia_Nome" materiaformArrayName="materiasUsuario">
+          <th mat-header-cell *matHeaderCellDef>Matéria</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+              <mat-select (selectionChange)="updateMateriaNome(element)" formControlName="materia_Nome" required>
+                <mat-option *ngFor="let materia of materiasAPI" [value]="materia.materia_Nome">
+                  {{ materia.materia_Nome }}
+                </mat-option>
+              </mat-select>
+            <mat-error *ngIf="element">
+              {{ retornaErro(element.get("materia_Nome")) }}
+            </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="materia_Bloco" materiaformArrayName="materiasUsuario">
+          <th mat-header-cell *matHeaderCellDef>Bloco</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+              <input matInput type="text" formControlName="materia_Bloco" maxlength="10" trim />
+              <mat-error *ngIf="element">
+                {{ retornaErro(element.get("materia_Bloco")) }}
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="professor_Nome" materiaformArrayName="materiasUsuario">
+          <th mat-header-cell *matHeaderCellDef>Professor</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+              <input matInput type="text" formControlName="professor_Nome" maxlength="50" trim />
+              <mat-error *ngIf="element">
+                {{ retornaErro(element.get("professor_Nome")) }}
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="professor_ID" materiaformArrayName="materiasUsuario">
+          <th mat-header-cell *matHeaderCellDef>Email de contato</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <mat-form-field appearance="outline">
+              <input matInput type="text" formControlName="professor_ID" maxlength="100" trim />
+              <mat-error *ngIf="element">
+                {{ retornaErro(element.get("professor_ID")) }}
+              </mat-error>
+            </mat-form-field>
+          </td>
+          element
+        </ng-container>
+
+        <ng-container matColumnDef="excluir" materiaformArrayName="materiasUsuario">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element" class="table-form">
+            <button mat-raised-button color="warn"
+              (click)="removeMateria(materias.controls.indexOf(element))">
+              Excluir
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="materiaColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: materiaColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">Nenhum endereço cadastrado</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+  <!--  -->
+
   <mat-checkbox *ngIf="usuarioAdmin == 'true'" formControlName="admin">Administrador</mat-checkbox>
   <div fxLayout="row" fxLayoutAlign="space-around center">
     <button *ngIf="usuarioAdmin == 'true' || usuarioEmail === this.usuarioForm.get('email')?.value" mat-raised-button

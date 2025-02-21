@@ -4,6 +4,8 @@ import { catchError, map } from 'rxjs/operators';
 import { ColaboradoresService } from '../services/colaboradores.service';
 import { UsuarioService } from '../services/usuario.service';
 import * as dayjs from 'dayjs';
+import { ProfessorService } from '../services/professores.service';
+import { MateriaService } from '../services/materias.service';
 
 export function retornaErro(campo: AbstractControl | null) {
   if (campo?.hasError('required')) { return 'O campo é obrigatório!'; }
@@ -32,7 +34,25 @@ export function comparadorSenhas(): ValidatorFn {
 export function usuarioExists(usuario: UsuarioService): AsyncValidatorFn {
   return (control: AbstractControl) => {
     return usuario.getOneUsuario(control.value).pipe(
-      map((usuario) => !usuario ? null : { custom: { message: 'Este nome de usuário já existe' } }),
+      map((usuario) => !usuario ? null : { custom: { message: 'Este email já existe' } }),
+      catchError(() => of(null))
+    );
+  };
+}
+
+export function professorExists(professor: ProfessorService): AsyncValidatorFn {
+  return (control: AbstractControl) => {
+    return professor.getOneProfessor(control.value).pipe(
+      map((professor) => !professor ? null : { custom: { message: 'Este email já existe' } }),
+      catchError(() => of(null))
+    );
+  };
+}
+
+export function materiaExists(materia: MateriaService): AsyncValidatorFn {
+  return (control: AbstractControl) => {
+    return materia.getOneMateria(control.value).pipe(
+      map((materia) => !materia ? null : { custom: { message: 'Esta materia já existe' } }),
       catchError(() => of(null))
     );
   };

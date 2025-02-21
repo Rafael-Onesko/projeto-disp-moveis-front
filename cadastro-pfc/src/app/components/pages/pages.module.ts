@@ -18,9 +18,13 @@ import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { MaterialModule } from 'src/app/material/material.module';
 import { DeletaUsuarioComponent } from '../dialogs/deleta-usuario/deleta-usuario.component';
-import { CadastroColaboradorComponent } from './cadastro-colaborador/cadastro-colaborador.component';
+import { CadastroMateriaComponent } from './cadastro-materias/cadastro-materias.component';
+import { CadastroProfessorComponent } from './cadastro-professor/cadastro-professor.component';
+import { CadastroRoleComponent } from './cadastro-roles/cadastro-roles.component';
 import { CadastroUsuarioComponent } from './cadastro-usuario/cadastro-usuario.component';
-import { ListaColaboradoresComponent } from './lista-colaboradores/lista-colaboradores.component';
+import { ListaMateriasComponent } from './lista-materias/lista-materias.component';
+import { ListaProfessoresComponent } from './lista-professores/lista-professores.component';
+import { ListaRolesComponent } from './lista-roles/lista-roles.component';
 import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 import { LoginComponent } from './login/login.component';
 
@@ -29,11 +33,15 @@ import { LoginComponent } from './login/login.component';
 @NgModule({
   declarations: [
     LoginComponent,
-    ListaColaboradoresComponent,
     ListaUsuariosComponent,
+    ListaProfessoresComponent,
+    ListaMateriasComponent,
+    ListaRolesComponent,
     CadastroUsuarioComponent,
+    CadastroProfessorComponent,
+    CadastroMateriaComponent,
+    CadastroRoleComponent,
     DeletaUsuarioComponent,
-    CadastroColaboradorComponent
   ],
   imports: [
     CommonModule,

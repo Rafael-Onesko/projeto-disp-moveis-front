@@ -24,7 +24,7 @@ export class ProfessorService {
   }
   
   editProfessor(professor: Professor, login: string): Observable<boolean> {
-    const params = new HttpParams().append('id', login)
+    const params = new HttpParams().append('email', login)
     return this._http.post<boolean>(`${this.baseApiUrl}`, professor, { params });
   }
 

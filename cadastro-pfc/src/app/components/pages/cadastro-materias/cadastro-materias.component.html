@@ -1,0 +1,67 @@
+<form [formGroup]="materiaForm" #formDir="ngForm" style="margin: 15px;">
+
+  <!-- Input materia_ID -->
+  <div>
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>materia_ID</mat-label>
+      <input matInput type="text" formControlName="materia_ID" maxlength="20" required trim />
+      <mat-error *ngIf="this.materiaForm.get('materia_ID')?.invalid">
+        {{ retornaErro(this.materiaForm.get('materia_ID')) }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <!-- input Nome -->
+  <div>
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>Nome</mat-label>
+      <input matInput type="text" formControlName="materia_Nome" maxlength="50" required trim="blur" />
+      <mat-error *ngIf="this.materiaForm.get('materia_Nome')?.invalid">{{
+        retornaErro(this.materiaForm.get('materia_Nome')) }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Input materia_Bloco -->
+  <div>
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>Bloco</mat-label>
+      <input matInput type="text" formControlName="materia_Bloco" maxlength="50" required trim="blur" />
+      <mat-error *ngIf="this.materiaForm.get('materia_Bloco')?.invalid">{{
+        retornaErro(this.materiaForm.get('materia_Bloco')) }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Input professor_ID -->
+  <div>
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>professor_ID</mat-label>
+      <mat-select (selectionChange)="updateProfessor()" formControlName="professor_ID" required>
+        <mat-option *ngFor="let prof of professoresAPI" [value]="prof.professor_ID">
+          {{ prof.professor_ID }}
+        </mat-option>
+      </mat-select> 
+      <mat-error *ngIf="this.materiaForm.get('professor_ID')?.invalid">
+        {{ retornaErro(this.materiaForm.get('professor_ID')) }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <!-- input Nome -->
+  <div>
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>Nome</mat-label>
+      <input matInput type="text" formControlName="professor_Nome" maxlength="50" required trim="blur" />
+      <mat-error *ngIf="this.materiaForm.get('professor_Nome')?.invalid">{{
+        retornaErro(this.materiaForm.get('professor_Nome')) }}</mat-error>
+    </mat-form-field>
+  </div>
+
+
+  <div fxLayout="row" fxLayoutAlign="space-around center">
+    <button *ngIf="usuarioAdmin == 'true' || usuarioprofessor_ID === this.materiaForm.get('professor_ID')?.value"
+      mat-raised-button style="background-color: green; color: white;" (click)="onClickSalvar()">
+      {{ modoEditar ? "Salvar" : "Cadastrar" }}
+    </button>
+    <a routerLink="/listamaterias">
+      <button mat-raised-button color="primary">Voltar</button>
+    </a>
+  </div>
+</form>

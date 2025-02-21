@@ -5,12 +5,16 @@
     <mat-nav-list>
       <p mat-list-item class="hello">Olá {{usuarioLogin}}!<br>({{usuarioNome}})</p>
 
-      <a mat-list-item routerLink="/dashboard" (click)="drawer.toggle()"><mat-icon matSuffix>assignment_ind</mat-icon>
+      <a mat-list-item routerLink="/editarusuario/{{usuarioLogin}}" (click)="drawer.toggle()"><mat-icon matSuffix>assignment_ind</mat-icon>
         Seu Perfil</a>
-      <a mat-list-item routerLink="/listacolaboradores" (click)="drawer.toggle()"><mat-icon
-          matSuffix>business_center</mat-icon> Colaboradores</a>
       <a mat-list-item routerLink="/listausuarios" (click)="drawer.toggle()"><mat-icon matSuffix>group</mat-icon>
         Usuários</a>
+      <a mat-list-item routerLink="/listaprofessores" (click)="drawer.toggle()"><mat-icon matSuffix>business_center</mat-icon>
+        Professores</a>
+      <a mat-list-item routerLink="/listamaterias" (click)="drawer.toggle()"><mat-icon matSuffix>menu_book</mat-icon>
+        Matérias</a>
+      <a mat-list-item routerLink="/listaroles" (click)="drawer.toggle()"><mat-icon matSuffix>class</mat-icon>
+        Roles</a>
       <a mat-list-item class="logout" (click)="onClickLogout()"><mat-icon matSuffix>undo</mat-icon> Logout</a>
     </mat-nav-list>
   </mat-sidenav>
